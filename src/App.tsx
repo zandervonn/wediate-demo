@@ -1,13 +1,20 @@
-import { useState } from "react";
-import { DemoWorkspace } from "./components/DemoWorkspace";
-import { LandingPage } from "./components/LandingPage";
+import { LobbyPage } from "./components/LobbyPage";
+import { SessionPage } from "./components/SessionPage";
+import { TopBar } from "./components/TopBar";
+import { PUBLIC_PREVIEW_LABEL, PUBLIC_PREVIEW_NOTICE } from "./mockMode";
+import { useAppStore } from "./store";
 
 export default function App() {
-  const [view, setView] = useState<"landing" | "demo">("landing");
+  const page = useAppStore((state) => state.page);
 
-  if (view === "demo") {
-    return <DemoWorkspace onBack={() => setView("landing")} />;
-  }
-
-  return <LandingPage onEnterLobby={() => setView("demo")} />;
+  return (
+    <>
+      <TopBar />
+      <div className="public-demo-banner" role="status">
+        <strong>{PUBLIC_PREVIEW_LABEL}</strong>
+        <span>{PUBLIC_PREVIEW_NOTICE}</span>
+      </div>
+      {page === "lobby" ? <LobbyPage /> : <SessionPage />}
+    </>
+  );
 }

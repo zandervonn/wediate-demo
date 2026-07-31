@@ -1,16 +1,18 @@
-# Wediate — sanitized product demo
+# Wediate - sanitized product demo
 
 Wediate is a product concept for difficult decisions: each person gets a private place to think, while a shared surface helps the group find workable next steps.
 
-This repository is intentionally a **frontend-only, browser-local demo**. It shows the product experience and interaction model with synthetic content. It does not contain the production backend, private prompt material, internal architecture documents, live session data, or account credentials.
+This repository is a **sanitized public snapshot of the real Wediate frontend UI**. It opens directly into a clearly labelled public preview so the interface, topic rail, private advocate chat, mediator state, and private-terms redaction flow can be inspected without a live service.
+
+For portfolio purposes, this is an interface and product-judgement proof piece: it demonstrates how a sensitive AI-assisted workflow can be made understandable and inspectable without publishing the production architecture, prompts, or data.
 
 ## What to try
 
-- Open the product overview.
-- Enter the synthetic workspace.
-- Send a thought to the sample advocate.
-- Toggle a constraint from private to shared.
-- Ask the sample mediator for the next useful move.
+- Read the opening chat: it explains that the session, participants, topics, and messages are synthetic.
+- Switch between the Lobby and Session views from the top navigation.
+- Inspect the real session layout: presence, phase rail, topic cards, private chat, and the private-terms redaction panel.
+- Use the theme control and session-code controls to explore the shell.
+- Expand the topic cards to see how open work and a partial agreement are represented.
 
 ## Run locally
 
@@ -21,11 +23,11 @@ npm run build
 npm run dev
 ```
 
-The demo makes no network requests and does not require an API key.
+The public demo makes no network requests and does not require an API key. The local adapter exists only to keep shared UI components renderable; it contains no production transport, provider client, prompt system, or server route.
 
 ## Why this repository is separate
 
-The full Wediate project remains private. This public repository is a deliberately small portfolio surface: enough to inspect the product thinking, interaction design, and frontend implementation without publishing the production prompt system or private engineering history.
+The full Wediate project remains private. This public repository contains the user-facing frontend surface and a clean mock boundary, but not the production backend, private prompt material, internal architecture documents, live session data, deployment configuration, or private engineering history.
 
 ## Boundary
 
