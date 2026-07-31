@@ -4,6 +4,7 @@ import { Tooltip } from "./Tooltip";
 
 export function TopBar() {
   const page = useAppStore((state) => state.page);
+  const setPage = useAppStore((state) => state.setPage);
   const sessionId = useAppStore((state) => state.sessionId);
   const health = useAppStore((state) => state.health);
   const copySessionCode = useAppStore((state) => state.copySessionCode);
@@ -97,6 +98,14 @@ export function TopBar() {
             Mediator Inspector
           </button>
         ) : null}
+        <nav className="nav" aria-label="Preview navigation">
+          <button className={page === "lobby" ? "active" : ""} onClick={() => setPage("lobby")}>
+            Lobby
+          </button>
+          <button className={page === "session" ? "active" : ""} onClick={() => setPage("session")}>
+            Session
+          </button>
+        </nav>
       </div>
     </header>
   );

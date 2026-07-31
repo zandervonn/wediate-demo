@@ -1,11 +1,24 @@
 import { create } from "zustand";
 import type {
+  DisclosureLevel,
   RedactionHighlightSpan,
   RedactionMessageProtection,
   SessionState,
 } from "./lib/types";
 
 type MockPage = "lobby" | "session";
+
+type LobbyRosterEntry = { name: string; note: string };
+
+type LobbyDraft = {
+  displayName: string;
+  description: string;
+  preAgreements: string;
+  roster: LobbyRosterEntry[];
+  disclosure: DisclosureLevel;
+  enforceParticipantCap: boolean;
+  joinCode: string;
+};
 
 type MockStore = {
   page: MockPage;
@@ -18,6 +31,8 @@ type MockStore = {
     app_env: string;
     wediate_env: string;
   };
+  lobby: LobbyDraft;
+  loading: boolean;
   sessionState: SessionState | null;
   draftMessages: any[];
   sending: boolean;
@@ -27,6 +42,9 @@ type MockStore = {
   redactionMessageProtections: Record<string, RedactionMessageProtection>;
   pendingDisclosures: Record<number, { label: string; locked: boolean }>;
   setPage: (page: MockPage) => void;
+  setLobby: (patch: Partial<LobbyDraft>) => void;
+  createSession: () => Promise<void>;
+  startJoin: () => Promise<void>;
   toggleTheme: () => void;
   refreshState: () => Promise<void>;
   refreshHighlights: () => Promise<void>;
@@ -52,6 +70,19 @@ export const useAppStore = create<MockStore>((set) => ({
     app_env: "public-demo",
     wediate_env: "public-demo",
   },
+  lobby: {
+    displayName: "Alex",
+    description: "Work out launch support coverage and the first owner for the rotation.",
+    preAgreements: "Keep the launch date under review.",
+    roster: [
+      { name: "Alex", note: "Product lead" },
+      { name: "Jordan", note: "Support partner" },
+    ],
+    disclosure: "ANONYMIZED",
+    enforceParticipantCap: true,
+    joinCode: "",
+  },
+  loading: false,
   sessionState: null,
   draftMessages: [],
   sending: false,
@@ -61,6 +92,9 @@ export const useAppStore = create<MockStore>((set) => ({
   redactionMessageProtections: {},
   pendingDisclosures: {},
   setPage: (page) => set({ page }),
+  setLobby: (patch) => set((state) => ({ lobby: { ...state.lobby, ...patch } })),
+  createSession: async () => set({ page: "session" }),
+  startJoin: async () => set({ page: "session" }),
   toggleTheme: () => set((state) => ({ theme: state.theme === "dark" ? "light" : "dark" })),
   refreshState: async () => undefined,
   refreshHighlights: async () => undefined,

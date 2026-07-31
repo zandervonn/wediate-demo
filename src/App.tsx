@@ -1,8 +1,12 @@
+import { LobbyPage } from "./components/LobbyPage";
 import { SessionPage } from "./components/SessionPage";
 import { TopBar } from "./components/TopBar";
 import { PUBLIC_PREVIEW_LABEL, PUBLIC_PREVIEW_NOTICE } from "./mockMode";
+import { useAppStore } from "./store";
 
 export default function App() {
+  const page = useAppStore((state) => state.page);
+
   return (
     <>
       <TopBar />
@@ -10,7 +14,7 @@ export default function App() {
         <strong>{PUBLIC_PREVIEW_LABEL}</strong>
         <span>{PUBLIC_PREVIEW_NOTICE}</span>
       </div>
-      <SessionPage />
+      {page === "lobby" ? <LobbyPage /> : <SessionPage />}
     </>
   );
 }

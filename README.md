@@ -7,6 +7,7 @@ This repository is a **sanitized public snapshot of the real Wediate frontend UI
 ## What to try
 
 - Read the opening chat: it explains that the session, participants, topics, and messages are synthetic.
+- Switch between the Lobby and Session views from the top navigation.
 - Inspect the real session layout: presence, phase rail, topic cards, private chat, and the private-terms redaction panel.
 - Use the theme control and session-code controls to explore the shell.
 - Expand the topic cards to see how open work and a partial agreement are represented.
