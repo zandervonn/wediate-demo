@@ -226,31 +226,6 @@ export interface SessionState {
   mediator_timer?: MediatorTimerState;
   liveness_blocker?: string | null;
   participant_view?: ParticipantView | null;
-  disclosure_requests?: DisclosureRequest[];
-}
-
-export type DisclosureRequestStatus = "pending" | "accepted" | "declined" | "superseded";
-
-export interface DisclosureRequest {
-  id: string;
-  session_id: string;
-  owner_participant_id: string;
-  source_proposition: string;
-  source_phrase_keys: string[];
-  willingness_quote: string;
-  exact_statement: string;
-  audience_participant_ids: string[];
-  blocked_outcome: string;
-  necessity: string;
-  remains_private: string;
-  decline_fallback: string;
-  topic_id?: string | null;
-  source_directive_id?: string | null;
-  status: DisclosureRequestStatus;
-  created_at: string;
-  decided_at?: string | null;
-  grant_id?: string | null;
-  delivered_recipient_ids: string[];
 }
 
 export type JoinerAck = "agreed" | "flagged" | "silent";

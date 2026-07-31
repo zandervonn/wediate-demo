@@ -5,7 +5,6 @@ import { getChatStatusTrace, recordChatStatusTrace } from "../lib/chatStatusTrac
 import { renderMarkdown, renderMarkdownWithHighlights } from "../lib/markdown";
 import type {
   ArtifactSection,
-  DisclosureRequest,
   MediatorTimerState,
   Participant,
   ProtectedDisplayGroup,
@@ -315,58 +314,6 @@ function ChatStatusChip({ status }: { status: BotStatusChipState }) {
         <span>{status.label}</span>
       </div>
     </div>
-  );
-}
-
-function DisclosureRequestCard({
-  request,
-  state,
-  busy,
-  onDecide,
-}: {
-  request: DisclosureRequest;
-  state: SessionState;
-  busy: boolean;
-  onDecide: (requestId: string, decision: "accept" | "decline") => void;
-}) {
-  const audience = request.audience_participant_ids
-    .map((id) => state.participants.find((participant) => participant.id === id)?.display_name || id)
-    .join(", ");
-  const delivered = request.delivered_recipient_ids
-    .map((id) => state.participants.find((participant) => participant.id === id)?.display_name || id)
-    .join(", ");
-  const pending = request.status === "pending";
-  const status = request.status === "accepted"
-    ? (delivered ? `Shared with ${delivered}` : "Allowed; awaiting delivery")
-    : request.status === "declined"
-      ? "Kept private"
-      : request.status === "superseded"
-        ? "No longer active"
-        : "Your decision";
-  return (
-    <section className={`disclosure-request-card ${request.status}`} data-testid={`disclosure-request-${request.id}`}>
-      <div className="disclosure-request-kicker">Exact release request</div>
-      <div className="disclosure-request-title">Share with {audience}</div>
-      <blockquote>{request.exact_statement}</blockquote>
-      <dl>
-        <div><dt>Why this is needed</dt><dd>{request.necessity}</dd></div>
-        <div><dt>What this unlocks</dt><dd>{request.blocked_outcome}</dd></div>
-        <div><dt>Still private</dt><dd>Everything beyond the exact statement above.</dd></div>
-        <div><dt>If you keep it private</dt><dd>{request.decline_fallback}</dd></div>
-      </dl>
-      {pending ? (
-        <div className="disclosure-request-actions">
-          <button type="button" disabled={busy} onClick={() => onDecide(request.id, "accept")}>
-            Share exact statement
-          </button>
-          <button type="button" className="secondary" disabled={busy} onClick={() => onDecide(request.id, "decline")}>
-            Keep private
-          </button>
-        </div>
-      ) : (
-        <div className="disclosure-request-status">{status}</div>
-      )}
-    </section>
   );
 }
 
@@ -1561,7 +1508,7 @@ function TopicRail({
   sessionId: string | null;
   participantId: string | null;
 }) {
-  const [protectionOpen, setProtectionOpen] = useState(false);
+  const [protectionOpen, setProtectionOpen] = useState(sessionId === "mock-01");
   const [protectionHeight, setProtectionHeight] = useState<number | null>(null);
   const stateOrder: Record<TopicView["state"], number> = {
     GATHERING: 0,
@@ -1726,29 +1673,6 @@ const DEV_PREVIEW_STATE: SessionState = {
   },
   mediator_log: [],
   mediator_timer: { status: "idle", seconds_remaining: 0 },
-  disclosure_requests: [
-    {
-      id: "preview-release-1",
-      session_id: "dev-preview",
-      owner_participant_id: "preview-you",
-      source_proposition: "A named owner could resolve the open support question.",
-      source_phrase_keys: ["named owner"],
-      willingness_quote: "Please share that I can cover the first support rotation.",
-      exact_statement: "Alex can cover the first two weeks of support after launch.",
-      audience_participant_ids: ["preview-other"],
-      blocked_outcome: "The mediator can test a workable rotation without revealing anything beyond the approved statement.",
-      necessity: "The shared option needs a first owner before the launch date can stay realistic.",
-      remains_private: "The conversation, constraints, and every detail beyond the exact statement remain private.",
-      decline_fallback: "The mediator will keep the support option open and continue working from the shared summary.",
-      topic_id: "preview-topic-1",
-      source_directive_id: "preview-directive-1",
-      status: "pending",
-      created_at: DEV_PREVIEW_TIME,
-      decided_at: null,
-      grant_id: null,
-      delivered_recipient_ids: [],
-    },
-  ],
 };
 
 function DevSessionPreview() {
@@ -1792,8 +1716,8 @@ function DevSessionPreview() {
             onReply={noopReply}
             onAcceptPackage={noopAccept}
             onMarkReady={async () => {}}
-            sessionId=""
-            participantId=""
+            sessionId="mock-01"
+            participantId="mock-you"
           />
           <main className="chat">
             <div className="chat-head">
@@ -1809,7 +1733,7 @@ function DevSessionPreview() {
             <div className="chat-messages">
               <ChatMessage
                 role="assistant"
-                text="This is a mock Wediate session. The participants, topics, disclosure request, and replies are synthetic and stay in this browser. It is here to show the interface, not live AI behavior."
+                text="This is a mock Wediate session. The participants, topics, private terms, and replies are synthetic and stay in this browser. It is here to show the interface, not live AI behavior."
                 ts={DEV_PREVIEW_TIME}
               />
               <ChatMessage
@@ -1822,15 +1746,6 @@ function DevSessionPreview() {
                 text="The mock shows the shape: you talk privately with an advocate, topics make the work visible, and an exact detail stays held until you choose to release it."
                 ts={DEV_PREVIEW_TIME}
               />
-              {DEV_PREVIEW_STATE.disclosure_requests?.map((request) => (
-                <DisclosureRequestCard
-                  key={request.id}
-                  request={request}
-                  state={DEV_PREVIEW_STATE}
-                  busy={false}
-                  onDecide={() => {}}
-                />
-              ))}
               <ChatStatusChip status={{ label: "Mock mode · no network", tone: "waiting" }} />
             </div>
             <div className="composer">
@@ -1859,7 +1774,6 @@ export function SessionPage() {
   const sending = useAppStore((store) => store.sending);
   const sendMessage = useAppStore((store) => store.sendMessage);
   const acceptPackage = useAppStore((store) => store.acceptPackage);
-  const decideDisclosureRequest = useAppStore((store) => store.decideDisclosureRequest);
   const markReady = useAppStore((store) => store.markReady);
   const endSessionEarly = useAppStore((store) => store.endSessionEarly);
   const flashUntil = useAppStore((store) => store.mediatorFlashUntil);
@@ -1923,7 +1837,6 @@ export function SessionPage() {
   }, [sessionId, participantId, sending, refreshState]);
   const [message, setMessage] = useState("");
   const [replyingTo, setReplyingTo] = useState<ReplyTarget | null>(null);
-  const [decidingDisclosureRequestId, setDecidingDisclosureRequestId] = useState<string | null>(null);
   const messagesRef = useRef<HTMLDivElement | null>(null);
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
 
@@ -2136,19 +2049,6 @@ export function SessionPage() {
     }
   };
 
-  const handleDisclosureDecision = async (
-    requestId: string,
-    decision: "accept" | "decline",
-  ) => {
-    if (decidingDisclosureRequestId) return;
-    setDecidingDisclosureRequestId(requestId);
-    try {
-      await decideDisclosureRequest(requestId, decision);
-    } finally {
-      setDecidingDisclosureRequestId(null);
-    }
-  };
-
   if (!state) {
     if (debugMode || testMode || mockMode) return <DevSessionPreview />;
     return (
@@ -2341,17 +2241,6 @@ export function SessionPage() {
                   ts={new Date().toISOString()}
                 />
               )}
-              {(state.disclosure_requests || []).map((request) => (
-                <DisclosureRequestCard
-                  key={request.id}
-                  request={request}
-                  state={state}
-                  busy={decidingDisclosureRequestId === request.id}
-                  onDecide={(requestId, decision) => {
-                    void handleDisclosureDecision(requestId, decision);
-                  }}
-                />
-              ))}
               {botStatusChip ? <ChatStatusChip status={botStatusChip} /> : null}
               {state.status === "READY_TO_END" ? (() => {
                 const self = state.participants.find((p) => p.id === state.participant_id);

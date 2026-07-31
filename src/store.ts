@@ -32,7 +32,6 @@ type MockStore = {
   refreshHighlights: () => Promise<void>;
   sendMessage: (...args: any[]) => Promise<boolean>;
   acceptPackage: (...args: any[]) => Promise<void>;
-  decideDisclosureRequest: (...args: any[]) => Promise<void>;
   markReady: (...args: any[]) => Promise<void>;
   endSessionEarly: (...args: any[]) => Promise<void>;
   copySessionCode: (...args: any[]) => Promise<void>;
@@ -67,14 +66,22 @@ export const useAppStore = create<MockStore>((set) => ({
   refreshHighlights: async () => undefined,
   sendMessage: async () => false,
   acceptPackage: async () => undefined,
-  decideDisclosureRequest: async () => undefined,
   markReady: async () => undefined,
   endSessionEarly: async () => undefined,
   copySessionCode: async () => undefined,
   copySessionLink: async () => undefined,
   openInspector: async () => undefined,
-  togglePendingDisclosure: () => undefined,
-  clearPendingDisclosures: () => undefined,
+  togglePendingDisclosure: (clusterId, label) => set((state) => ({
+    pendingDisclosures: {
+      ...state.pendingDisclosures,
+      [clusterId]: { label, locked: false },
+    },
+  })),
+  clearPendingDisclosures: (clusterIds) => set((state) => {
+    const pending = { ...state.pendingDisclosures };
+    for (const clusterId of clusterIds) delete pending[clusterId];
+    return { pendingDisclosures: pending };
+  }),
 }));
 
 export function buildSharedOutcomeUrl(sessionId: string): string {
