@@ -1605,6 +1605,90 @@ function TopicRail({
 
 const DEV_PREVIEW_TIME = "2026-07-06T12:00:00.000Z";
 
+type PreviewChatMessage = {
+  role: "user" | "assistant";
+  text: string;
+  ts: string;
+};
+
+const DEV_PREVIEW_CHAT: PreviewChatMessage[] = [
+  {
+    role: "assistant",
+    text: "This is an offline Wediate preview. The participants, topics, private terms, and replies are synthetic and stay in this browser. It shows the interface, not live AI behavior.",
+    ts: DEV_PREVIEW_TIME,
+  },
+  {
+    role: "user",
+    text: "Can you walk me through how Wediate works? I can see topics and a private chat, but I am not sure how they fit together.",
+    ts: "2026-07-06T12:00:16.000Z",
+  },
+  {
+    role: "assistant",
+    text: "Wediate gives each participant a private place to think while keeping the group focused on workable next steps. This chat is your advocate space; it helps you explain what matters to you before anything is put on the shared surface.",
+    ts: "2026-07-06T12:00:31.000Z",
+  },
+  {
+    role: "user",
+    text: "So is the advocate another person in the meeting, or is it working just for me?",
+    ts: "2026-07-06T12:00:48.000Z",
+  },
+  {
+    role: "assistant",
+    text: "It is a private guide for your side of the conversation. Other participants have their own private space, so you can be candid about constraints and priorities without turning every thought into a public position.",
+    ts: "2026-07-06T12:01:05.000Z",
+  },
+  {
+    role: "user",
+    text: "What are the Topics on the left doing while we talk?",
+    ts: "2026-07-06T12:01:21.000Z",
+  },
+  {
+    role: "assistant",
+    text: "Topics keep the conversation legible. Each one tracks a piece of the decision, such as launch support coverage or a rotation option, and shows whether it is still being explored, partly shaped, or resolved.",
+    ts: "2026-07-06T12:01:39.000Z",
+  },
+  {
+    role: "user",
+    text: "I noticed some terms are marked as private. Why hold those back?",
+    ts: "2026-07-06T12:01:56.000Z",
+  },
+  {
+    role: "assistant",
+    text: "A private term can carry useful context without being ready to share word-for-word. The Private terms panel lets you review those details and decide what can move into the shared conversation, instead of revealing more than you intended.",
+    ts: "2026-07-06T12:02:14.000Z",
+  },
+  {
+    role: "user",
+    text: "When does something become part of the shared outcome?",
+    ts: "2026-07-06T12:02:31.000Z",
+  },
+  {
+    role: "assistant",
+    text: "A detail becomes useful to the group when it has been shaped into something the relevant people can see and respond to. Wediate keeps the distinction between your private context and a shared proposal visible while that happens.",
+    ts: "2026-07-06T12:02:49.000Z",
+  },
+  {
+    role: "user",
+    text: "Does Wediate decide who is right or tell us what we have to agree to?",
+    ts: "2026-07-06T12:03:06.000Z",
+  },
+  {
+    role: "assistant",
+    text: "No. It helps the group see the open questions, trade-offs, and possible next steps. The people involved still decide what is acceptable and whether the final summary reflects the agreement.",
+    ts: "2026-07-06T12:03:24.000Z",
+  },
+  {
+    role: "user",
+    text: "And what happens when the topics are settled?",
+    ts: "2026-07-06T12:03:41.000Z",
+  },
+  {
+    role: "assistant",
+    text: "You review the outcome together, check that the remaining work is understood, and close when everyone is ready. The preview leaves that path visible through the topic states, phase rail, and export controls.",
+    ts: "2026-07-06T12:03:59.000Z",
+  },
+];
+
 const DEV_PREVIEW_STATE: SessionState = {
   session_id: "dev-preview",
   participant_id: "preview-you",
@@ -1731,21 +1815,14 @@ function DevSessionPreview() {
               </div>
             </div>
             <div className="chat-messages">
-              <ChatMessage
-                role="assistant"
-                text="This is an offline Wediate preview. The participants, topics, private terms, and replies are synthetic and stay in this browser. It shows the interface, not live AI behavior."
-                ts={DEV_PREVIEW_TIME}
-              />
-              <ChatMessage
-                role="user"
-                text="I want to understand how a private constraint becomes a shared next step."
-                ts={DEV_PREVIEW_TIME}
-              />
-              <ChatMessage
-                role="assistant"
-                text="The preview shows the shape: you talk privately with an advocate, topics make the work visible, and an exact detail stays held until you choose to release it."
-                ts={DEV_PREVIEW_TIME}
-              />
+              {DEV_PREVIEW_CHAT.map((message) => (
+                <ChatMessage
+                  key={`${message.role}-${message.ts}`}
+                  role={message.role}
+                  text={message.text}
+                  ts={message.ts}
+                />
+              ))}
               <ChatStatusChip status={{ label: "Local preview · no network", tone: "waiting" }} />
             </div>
             <div className="composer">
