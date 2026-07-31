@@ -1,13 +1,16 @@
-import { useState } from "react";
-import { DemoWorkspace } from "./components/DemoWorkspace";
-import { LandingPage } from "./components/LandingPage";
+import { SessionPage } from "./components/SessionPage";
+import { TopBar } from "./components/TopBar";
+import { MOCK_MODE_LABEL, MOCK_MODE_NOTICE } from "./mockMode";
 
 export default function App() {
-  const [view, setView] = useState<"landing" | "demo">("landing");
-
-  if (view === "demo") {
-    return <DemoWorkspace onBack={() => setView("landing")} />;
-  }
-
-  return <LandingPage onEnterLobby={() => setView("demo")} />;
+  return (
+    <>
+      <TopBar />
+      <div className="public-demo-banner" role="status">
+        <strong>{MOCK_MODE_LABEL}</strong>
+        <span>{MOCK_MODE_NOTICE}</span>
+      </div>
+      <SessionPage />
+    </>
+  );
 }
