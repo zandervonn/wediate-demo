@@ -4,6 +4,8 @@ Wediate is a product concept for difficult decisions: each person gets a private
 
 This repository is a **sanitized public snapshot of the real Wediate frontend UI**. It opens directly into a clearly labelled public preview so the interface, topic rail, private advocate chat, mediator state, and private-terms redaction flow can be inspected without a live service.
 
+For portfolio purposes, this is an interface and product-judgement proof piece: it demonstrates how a sensitive AI-assisted workflow can be made understandable and inspectable without publishing the production architecture, prompts, or data.
+
 ## What to try
 
 - Read the opening chat: it explains that the session, participants, topics, and messages are synthetic.
