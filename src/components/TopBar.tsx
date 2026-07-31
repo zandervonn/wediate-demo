@@ -13,7 +13,10 @@ export function TopBar() {
   const toggleTheme = useAppStore((state) => state.toggleTheme);
   const [copied, setCopied] = useState(false);
   const [linkCopied, setLinkCopied] = useState(false);
-  const showSessionSwitcher = health?.dev_mode === "1" || health?.test_mode === "1" || Boolean(sessionId);
+
+  useEffect(() => {
+    document.documentElement.dataset.theme = theme;
+  }, [theme]);
 
   useEffect(() => {
     if (!copied) return;
@@ -94,7 +97,6 @@ export function TopBar() {
             Mediator Inspector
           </button>
         ) : null}
-        {showSessionSwitcher ? <span className="mock-mode-pill">Mock session</span> : null}
       </div>
     </header>
   );

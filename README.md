@@ -2,7 +2,7 @@
 
 Wediate is a product concept for difficult decisions: each person gets a private place to think, while a shared surface helps the group find workable next steps.
 
-This repository is a **sanitized public snapshot of the real Wediate frontend UI**. It opens directly into a clearly labelled mock session so the interface, topic rail, private advocate chat, mediator state, and disclosure flow can be inspected without a live service.
+This repository is a **sanitized public snapshot of the real Wediate frontend UI**. It opens directly into a clearly labelled public preview so the interface, topic rail, private advocate chat, mediator state, and private-terms redaction flow can be inspected without a live service.
 
 ## What to try
 

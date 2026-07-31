@@ -1508,7 +1508,7 @@ function TopicRail({
   sessionId: string | null;
   participantId: string | null;
 }) {
-  const [protectionOpen, setProtectionOpen] = useState(sessionId === "mock-01");
+  const [protectionOpen, setProtectionOpen] = useState(sessionId === "preview-01");
   const [protectionHeight, setProtectionHeight] = useState<number | null>(null);
   const stateOrder: Record<TopicView["state"], number> = {
     GATHERING: 0,
@@ -1608,7 +1608,7 @@ const DEV_PREVIEW_TIME = "2026-07-06T12:00:00.000Z";
 const DEV_PREVIEW_STATE: SessionState = {
   session_id: "dev-preview",
   participant_id: "preview-you",
-  session_name: "Mock session walkthrough",
+  session_name: "Preview session",
   status: "ACTIVE",
   output_type: "Resolution Summary",
   welcome_message: "",
@@ -1643,7 +1643,7 @@ const DEV_PREVIEW_STATE: SessionState = {
       name: "Launch support coverage",
       state: "GATHERING",
       draft_status: "NONE",
-      working_draft: "The mock mediator is mapping who owns support after launch and what capacity is realistic.",
+      working_draft: "The mediator is mapping who owns support after launch and what capacity is realistic.",
       acceptance: {},
     },
     {
@@ -1716,24 +1716,24 @@ function DevSessionPreview() {
             onReply={noopReply}
             onAcceptPackage={noopAccept}
             onMarkReady={async () => {}}
-            sessionId="mock-01"
-            participantId="mock-you"
+            sessionId="preview-01"
+            participantId="preview-you"
           />
           <main className="chat">
             <div className="chat-head">
               <div>
                 <div className="chat-title">Private Advocate Chat</div>
-                <div className="chat-subtitle">Mock session · synthetic content</div>
+                <div className="chat-subtitle">Preview session · synthetic content</div>
               </div>
               <div className="chat-head-badges">
-                <div className="chat-badge">Mock only</div>
+                <div className="chat-badge">Preview</div>
                 <div className="chat-badge">Visible only to you</div>
               </div>
             </div>
             <div className="chat-messages">
               <ChatMessage
                 role="assistant"
-                text="This is a mock Wediate session. The participants, topics, private terms, and replies are synthetic and stay in this browser. It is here to show the interface, not live AI behavior."
+                text="This is an offline Wediate preview. The participants, topics, private terms, and replies are synthetic and stay in this browser. It shows the interface, not live AI behavior."
                 ts={DEV_PREVIEW_TIME}
               />
               <ChatMessage
@@ -1743,21 +1743,21 @@ function DevSessionPreview() {
               />
               <ChatMessage
                 role="assistant"
-                text="The mock shows the shape: you talk privately with an advocate, topics make the work visible, and an exact detail stays held until you choose to release it."
+                text="The preview shows the shape: you talk privately with an advocate, topics make the work visible, and an exact detail stays held until you choose to release it."
                 ts={DEV_PREVIEW_TIME}
               />
-              <ChatStatusChip status={{ label: "Mock mode · no network", tone: "waiting" }} />
+              <ChatStatusChip status={{ label: "Local preview · no network", tone: "waiting" }} />
             </div>
             <div className="composer">
               <div className="composer-row">
                 <textarea
                   value=""
-                  placeholder="Mock mode: sending is disabled. The production service stays private."
+                  placeholder="Preview mode: sending is disabled. The production service stays private."
                   disabled
                   readOnly
                 />
                 <button type="button" className="send-btn" disabled>
-                  Mock only
+                  Preview
                 </button>
               </div>
             </div>

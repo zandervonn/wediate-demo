@@ -1,10 +1,10 @@
 import { describe, expect, it } from "vitest";
-import { MOCK_MODE_LABEL, MOCK_MODE_NOTICE } from "./mockMode";
+import { PUBLIC_PREVIEW_LABEL, PUBLIC_PREVIEW_NOTICE } from "./mockMode";
 
 describe("public demo boundary", () => {
-  it("labels the visible experience as a local mock", () => {
-    expect(MOCK_MODE_LABEL).toBe("Mock session");
-    expect(MOCK_MODE_NOTICE).toContain("no API calls");
-    expect(MOCK_MODE_NOTICE).toContain("prompts stay private");
+  it("labels the visible experience as a local preview", () => {
+    expect(PUBLIC_PREVIEW_LABEL).toBe("Public preview");
+    expect(PUBLIC_PREVIEW_NOTICE).toContain("no API calls");
+    expect(PUBLIC_PREVIEW_NOTICE).toContain("prompts stay private");
   });
 });

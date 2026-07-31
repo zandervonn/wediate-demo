@@ -44,8 +44,8 @@ type MockStore = {
 export const useAppStore = create<MockStore>((set) => ({
   page: "session",
   theme: "light",
-  sessionId: "mock-01",
-  participantId: "mock-you",
+  sessionId: "preview-01",
+  participantId: "preview-you",
   health: {
     dev_mode: "0",
     test_mode: "0",

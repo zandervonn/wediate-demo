@@ -208,16 +208,6 @@ button, input, textarea, select { font: inherit; }
 .session-tools > * {
   pointer-events: auto;
 }
-.mock-mode-pill {
-  border: 1px solid rgba(143,107,75,.34);
-  border-radius: 999px;
-  padding: 6px 10px;
-  color: var(--earth);
-  background: rgba(143,107,75,.08);
-  font: 600 11px var(--mono);
-  letter-spacing: .02em;
-  white-space: nowrap;
-}
 .session-share-controls { display: inline-flex; align-items: center; gap: 6px; min-width: 0; }
 .session-pill {
   border: 1px solid var(--line); background: rgba(var(--surf),.5); border-radius: 999px; padding: 6px 10px;
@@ -1791,5 +1781,4 @@ textarea { min-height: 78px; resize: vertical; }
 @media (max-width: 700px) {
   .public-demo-banner { align-items: flex-start; flex-direction: column; gap: 3px; }
   .page.session-page { height: auto; min-height: calc(100vh - 106px); overflow: visible; }
-  .mock-mode-pill { display: none; }
 }
