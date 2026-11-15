@@ -2,85 +2,9 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta http-equiv="refresh" content="3; url=https://wediate.app/" />
+    <meta http-equiv="refresh" content="0; url=https://wediate.app/" />
     <link rel="canonical" href="https://wediate.app/" />
-    <title>Wediate is now live</title>
-    <style>
-      :root {
-        color-scheme: light dark;
-        --background: #f4efe6;
-        --ink: #2f2a24;
-        --link: #2f5c75;
-        --line: #c8bbaa;
-      }
-
-      @media (prefers-color-scheme: dark) {
-        :root {
-          --background: #1b1714;
-          --ink: #ece6dc;
-          --link: #7fb8d6;
-          --line: #5b5148;
-        }
-      }
-
-      body {
-        display: grid;
-        place-items: center;
-        min-height: 100vh;
-        margin: 0;
-        padding: 1.5rem;
-        box-sizing: border-box;
-        background: var(--background);
-        color: var(--ink);
-        font: 1.05rem/1.55 "IBM Plex Sans", system-ui, sans-serif;
-      }
-
-      main {
-        width: min(100%, 36rem);
-        padding-block: 1.5rem;
-        border-block: 1px solid var(--line);
-      }
-
-      h1 {
-        margin: 0;
-        font: 500 clamp(2rem, 7vw, 3.5rem)/1.12 Fraunces, Georgia, serif;
-      }
-
-      p { margin: 0.85rem 0 1.1rem; }
-
-      a {
-        display: inline-block;
-        padding-block: 0.5rem;
-        color: var(--link);
-        font-weight: 600;
-        text-underline-offset: 0.2em;
-      }
-
-      a:focus-visible {
-        outline: 2px solid currentColor;
-        outline-offset: 4px;
-      }
-    </style>
+    <title>Wediate</title>
   </head>
-  <body>
-    <main>
-      <h1>Wediate is now live</h1>
-      <p id="countdown">Opening wediate.app in 3 seconds.</p>
-      <a href="https://wediate.app/">Open wediate.app now</a>
-    </main>
-    <script>
-      window.addEventListener("load", () => {
-        const countdown = document.getElementById("countdown");
-        const refresh = document.querySelector('meta[http-equiv="refresh"]');
-        let seconds = Number.parseInt(refresh.content, 10);
-
-        const timer = window.setInterval(() => {
-          seconds -= 1;
-          countdown.textContent = `Opening wediate.app in ${seconds} ${seconds === 1 ? "second" : "seconds"}.`;
-          if (seconds === 1) window.clearInterval(timer);
-        }, 1000);
-      }, { once: true });
-    </script>
-  </body>
+  <body></body>
 </html>
