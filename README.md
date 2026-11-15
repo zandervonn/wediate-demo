@@ -1,12 +1,10 @@
-# Wediate - sanitized product demo
+# Wediate is now live
 
-**Visit the live site at [wediate.app](https://wediate.app/).**
+**[Open the full Wediate site at wediate.app](https://wediate.app/).**
 
-Wediate is a product concept for difficult decisions: each person gets a private place to think, while a shared surface helps the group find workable next steps.
+## Original demo
 
-This repository is a **sanitized public snapshot of the real Wediate frontend UI**. It opens directly into a clearly labelled public preview so the interface, topic rail, private advocate chat, mediator state, and private-terms redaction flow can be inspected without a live service.
-
-For portfolio purposes, this is an interface and product-judgement proof piece: it demonstrates how a sensitive AI-assisted workflow can be made understandable and inspectable without publishing the production architecture, prompts, or data.
+This repository contains the original offline preview of Wediate’s lobby, private advocate chat, decision flow, and private-terms redaction. You can run it locally with the steps below.
 
 ## What to try
 
