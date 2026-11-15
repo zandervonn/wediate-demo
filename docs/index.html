@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta http-equiv="refresh" content="4; url=https://wediate.app/" />
+    <meta http-equiv="refresh" content="3; url=https://wediate.app/" />
     <link rel="canonical" href="https://wediate.app/" />
     <title>Wediate is now live</title>
     <style>
@@ -66,8 +66,21 @@
   <body>
     <main>
       <h1>Wediate is now live</h1>
-      <p>Taking you to the full Wediate site.</p>
+      <p id="countdown">Opening wediate.app in 3 seconds.</p>
       <a href="https://wediate.app/">Open wediate.app now</a>
     </main>
+    <script>
+      window.addEventListener("load", () => {
+        const countdown = document.getElementById("countdown");
+        const refresh = document.querySelector('meta[http-equiv="refresh"]');
+        let seconds = Number.parseInt(refresh.content, 10);
+
+        const timer = window.setInterval(() => {
+          seconds -= 1;
+          countdown.textContent = `Opening wediate.app in ${seconds} ${seconds === 1 ? "second" : "seconds"}.`;
+          if (seconds === 1) window.clearInterval(timer);
+        }, 1000);
+      }, { once: true });
+    </script>
   </body>
 </html>
